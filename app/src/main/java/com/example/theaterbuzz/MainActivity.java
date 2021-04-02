@@ -59,19 +59,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent( this,RegisterMovieActivity.class));
                 break;
             case R.id.btnDisplayMovies:
-                startActivity(new Intent( this,RegisterMovieActivity.class));
+                startActivity(new Intent( this,DisplayMovieActivity.class));
                 break;
             case R.id.btnFavorites:
-                startActivity(new Intent( this,RegisterMovieActivity.class));
+                startActivity(new Intent( this,FavouritesActivity.class));
                 break;
             case R.id.btnEditMovies:
-                startActivity(new Intent( this,RegisterMovieActivity.class));
+                startActivity(new Intent( this,EditMoviesActivity.class));
                 break;
             case R.id.btnSearch:
-                startActivity(new Intent( this,RegisterMovieActivity.class));
+                startActivity(new Intent( this,SearchActivity.class));
                 break;
             case R.id.btnRatings:
-                startActivity(new Intent( this,RegisterMovieActivity.class));
+                startActivity(new Intent( this,RatingsActivity.class));
                 break;
         }
     }
