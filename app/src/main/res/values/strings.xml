@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">THEATERBUZZ</string>
+    <string name="register_movie">Register Movie</string>
 </resources>
