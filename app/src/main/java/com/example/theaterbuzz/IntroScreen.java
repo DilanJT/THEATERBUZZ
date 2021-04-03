@@ -25,7 +25,7 @@ public class IntroScreen extends AppCompatActivity {
         Thread background = new Thread() {
             public void run() {
                 try {
-                    // Thread will sleep for 5 seconds
+                    // Thread will sleep for 1.2 seconds
                     sleep(1200);
                     Intent i=new Intent(getBaseContext(),MainActivity.class);
                     startActivity(i);
