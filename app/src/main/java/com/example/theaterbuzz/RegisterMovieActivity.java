@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.theaterbuzz.model.MinMaxFilter;
 
 public class RegisterMovieActivity extends AppCompatActivity {
 
@@ -38,6 +41,9 @@ public class RegisterMovieActivity extends AppCompatActivity {
         rating = (EditText) findViewById(R.id.registerRating);
         review = (EditText) findViewById(R.id.registerreview);
         btnSave = (Button) findViewById(R.id.btnRegisterSave);
+
+        // setting rating filter to allow only input between 1 to 10
+        rating.setFilters(new InputFilter[] { new MinMaxFilter("1", "10")});
     }
 
     // function to check user have input text in the correct way
