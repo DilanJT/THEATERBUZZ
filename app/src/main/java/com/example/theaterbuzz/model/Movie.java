@@ -65,6 +65,9 @@ public class Movie {
     }
 
     public String[] getActors() {
+
+        // TODO convert array to string
+        String actorString = "";
         return actors;
     }
 
