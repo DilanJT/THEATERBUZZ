@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Movie Year"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:text="" />
 
             <TextView
@@ -139,6 +139,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Save"
+        android:onClick="registerMovie"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

@@ -5,9 +5,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.theaterbuzz.model.MinFilter;
 import com.example.theaterbuzz.model.MinMaxFilter;
 
 public class RegisterMovieActivity extends AppCompatActivity {
@@ -44,10 +47,28 @@ public class RegisterMovieActivity extends AppCompatActivity {
 
         // setting rating filter to allow only input between 1 to 10
         rating.setFilters(new InputFilter[] { new MinMaxFilter("1", "10")});
+        // setting the year filter to allow only to inputs year greater than 1895
+        year.setFilters(new InputFilter[] { new MinFilter("1895")});
     }
 
     // function to check user have input text in the correct way
     public void checkTextBoxValidity(){
 
+    }
+
+    public void registerMovie(View view) {
+        if(!title.getText().toString().isEmpty() &&
+            !year.getText().toString().isEmpty() &&
+            !director.getText().toString().isEmpty() &&
+            !actors.getText().toString().isEmpty() &&
+            !rating.getText().toString().isEmpty() &&
+            !review.getText().toString().isEmpty()){
+
+            // save the details to the database
+
+
+        }else {
+            Toast.makeText(this, "Not saved! Please fill all the details", Toast.LENGTH_SHORT).show();
+        }
     }
 }
