@@ -10,27 +10,38 @@ public class Movie {
     private String[] actors;
     private int rating;
     private String review;
+    private boolean isFavourite;
 
-    public Movie(int movieID, String movieTitle, int movieYear, String movieDirector, String[] actors, int rating, String review) {
+
+
+    public Movie(int movieID, String movieTitle, int movieYear, String movieDirector,
+                 String actors, int rating, String review, boolean isFavourite) {
         this.movieID = movieID;
         this.movieTitle = movieTitle;
         this.movieYear = movieYear;
         this.movieDirector = movieDirector;
-        this.actors = actors;
+        //this.actors = actors;
+        setStringActors(actors);
         this.rating = rating;
         this.review = review;
+        this.isFavourite = isFavourite;
     }
 
-    public Movie(String movieTitle, int movieYear, String movieDirector, String[] actors, int rating, String review) {
+    public Movie(String movieTitle, int movieYear, String movieDirector,
+                 String actors, int rating, String review, boolean isFavourite) {
         this.movieTitle = movieTitle;
         this.movieYear = movieYear;
         this.movieDirector = movieDirector;
-        this.actors = actors;
+        // this.actors = actors;
+        setStringActors(actors);
         this.rating = rating;
         this.review = review;
+        this.isFavourite = isFavourite;
     }
 
-    public Movie(){}
+    public Movie(){
+        isFavourite = false;
+    }
 
     public int getMovieID() {
         return movieID;
@@ -64,15 +75,32 @@ public class Movie {
         this.movieDirector = movieDirector;
     }
 
-    public String[] getActors() {
-
-        // TODO convert array to string
-        String actorString = "";
+    // to get the array of actors
+    public String[] getArrayActors() {
         return actors;
+    }
+
+    //to get the string of actors
+    public String getStringActors(){
+        return convertStringArrayToString(actors, ",");
+    }
+
+    // https://www.journaldev.com/773/java-string-array-to-string
+    public String convertStringArrayToString(String[] array, String sep) {
+        StringBuilder builder = new StringBuilder();
+        for(String str : array) {
+            builder.append(str).append(sep);
+        }
+        return builder.substring(0, builder.length() - 1);
     }
 
     public void setActors(String[] actors) {
         this.actors = actors;
+    }
+
+    public void setStringActors(String strActors){
+        // converting the string to an array
+        this.actors = strActors.split(",");
     }
 
     public int getRating() {
@@ -89,6 +117,14 @@ public class Movie {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
 
     @Override

@@ -12,11 +12,13 @@ import java.util.List;
 import static android.provider.BaseColumns._ID;
 import static com.example.theaterbuzz.model.Constants.ACTORS;
 import static com.example.theaterbuzz.model.Constants.DIRECTOR;
+import static com.example.theaterbuzz.model.Constants.ISFAVOURITE;
 import static com.example.theaterbuzz.model.Constants.RATING;
 import static com.example.theaterbuzz.model.Constants.REVIEW;
 import static com.example.theaterbuzz.model.Constants.TABLE_NAME;
 import static com.example.theaterbuzz.model.Constants.TITLE;
 import static com.example.theaterbuzz.model.Constants.YEAR;
+import static java.sql.Types.BOOLEAN;
 import static java.sql.Types.INTEGER;
 
 
@@ -39,7 +41,8 @@ public class MovieDataHelper extends SQLiteOpenHelper {
             + DIRECTOR + " TEXT NOT NULL,"
             + ACTORS + " TEXT,"
             + RATING + " INTEGER,"
-            + REVIEW + " TEXT);");
+            + REVIEW + " TEXT,"
+            + ISFAVOURITE + "BOOLEAN);");
     }
 
     @Override
@@ -55,9 +58,10 @@ public class MovieDataHelper extends SQLiteOpenHelper {
         values.put(TITLE, movie.getMovieTitle());
         values.put(YEAR, movie.getMovieYear());
         values.put(DIRECTOR, movie.getMovieDirector());
-        //values.put(ACTORS, movie.getActors());
+        values.put(ACTORS, movie.getStringActors());
         values.put(RATING, movie.getRating());
         values.put(REVIEW, movie.getReview());
+        values.put(ISFAVOURITE, movie.isFavourite());
 
         db.insertOrThrow(TABLE_NAME, null, values);
         db.close();
@@ -68,7 +72,7 @@ public class MovieDataHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME, new String[] {
-                _ID, TITLE, YEAR, DIRECTOR, ACTORS, RATING, REVIEW}, _ID + "=?",
+                _ID, TITLE, YEAR, DIRECTOR, ACTORS, RATING, REVIEW, ISFAVOURITE}, _ID + "=?",
                 new String[] {String.valueOf(id)}, null, null, null, null);
         if(cursor != null)
             cursor.moveToFirst();
@@ -80,7 +84,8 @@ public class MovieDataHelper extends SQLiteOpenHelper {
                 cursor.getString(3),
                 cursor.getString(4),
                 Integer.parseInt(cursor.getString(5)),
-                cursor.getString(6)
+                cursor.getString(6),
+                Boolean.parseBoolean(cursor.getString(7))
         );
         return movie;
     }
@@ -101,9 +106,10 @@ public class MovieDataHelper extends SQLiteOpenHelper {
                 movie.setMovieTitle(cursor.getString(1));
                 movie.setMovieYear(Integer.parseInt(cursor.getString(2)));
                 movie.setMovieDirector(cursor.getString(3));
-                movie.setActors(cursor.getString(4));
+                movie.setStringActors(cursor.getString(4));
                 movie.setRating(Integer.parseInt(cursor.getString(5)));
                 movie.setReview(cursor.getString(6));
+                movie.setFavourite(Boolean.parseBoolean(cursor.getString(7)));
 
                 movies.add(movie);
             }while (cursor.moveToNext());
@@ -128,7 +134,7 @@ public class MovieDataHelper extends SQLiteOpenHelper {
         values.put(TITLE, movie.getMovieTitle());
         values.put(YEAR, movie.getMovieYear());
         values.put(DIRECTOR, movie.getMovieDirector());
-        values.put(ACTORS, movie.getActors());
+        values.put(ACTORS, movie.getStringActors());
         values.put(RATING, movie.getRating());
         values.put(REVIEW, movie.getReview());
 
