@@ -5,13 +5,15 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.theaterbuzz.model.MinFilter;
 import com.example.theaterbuzz.model.MinMaxFilter;
+
+import java.util.Date;
 
 public class RegisterMovieActivity extends AppCompatActivity {
 
@@ -47,8 +49,13 @@ public class RegisterMovieActivity extends AppCompatActivity {
 
         // setting rating filter to allow only input between 1 to 10
         rating.setFilters(new InputFilter[] { new MinMaxFilter("1", "10")});
+
         // setting the year filter to allow only to inputs year greater than 1895
-        year.setFilters(new InputFilter[] { new MinFilter("1895")});
+        Date d = new Date();
+        int currentYear = d.getYear();
+        currentYear = currentYear + 1900;
+        Log.d("YEAR", "Current year is " + currentYear);
+        year.setFilters(new InputFilter[] { new MinMaxFilter(1895, currentYear)});
     }
 
     // function to check user have input text in the correct way
