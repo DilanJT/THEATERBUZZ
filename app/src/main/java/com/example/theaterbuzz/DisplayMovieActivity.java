@@ -95,11 +95,13 @@ public class DisplayMovieActivity extends AppCompatActivity {
         Log.d("LoadMovies: " , "Loading movies from database...");
         List<Movie> movies = db.getAllMovies();
 
-        for(int i = 0; i < movies.size(); i++) {
-            String movieString = movies.get(i).getMovieTitle() + " - " + movies.get(i).getMovieYear();
-            Log.d("Movie :", movieString);
-            moviesList.add(movieString); // adding the movie string to the listview list
-            listView.setItemChecked(i, movies.get(i).isFavourite());
+        if(!movies.isEmpty()) {
+            for (int i = 0; i < movies.size(); i++) {
+                String movieString = movies.get(i).getMovieTitle() + " - " + movies.get(i).getMovieYear();
+                Log.d("Movie :", movieString);
+                moviesList.add(movieString); // adding the movie string to the listview list
+                listView.setItemChecked(i, movies.get(i).isFavourite());
+            }
         }
     }
 }
