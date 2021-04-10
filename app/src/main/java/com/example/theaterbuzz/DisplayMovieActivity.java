@@ -43,7 +43,7 @@ public class DisplayMovieActivity extends AppCompatActivity {
         // loading the movies as string value each to the moviesList array
         loadMovies();
 
-
+        // TODO: have to display the movies in the alphabetical way
     }
 
     public void saveFavourites(View view) {
