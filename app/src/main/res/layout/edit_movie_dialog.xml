@@ -16,15 +16,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/texttitleEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Edit Movie"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
-            <TextView
                 android:id="@+id/texttitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,7 +24,7 @@
 
             <EditText
                 android:id="@+id/registerEditTitle"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Movie Title"
@@ -49,7 +40,7 @@
 
             <EditText
                 android:id="@+id/registerEditYear"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Movie Year"
@@ -65,7 +56,7 @@
 
             <EditText
                 android:id="@+id/registerEditDirector"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Movie Director"
@@ -81,7 +72,7 @@
 
             <EditText
                 android:id="@+id/registerEditActors"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Movie Actors"
@@ -97,11 +88,15 @@
 
             <RatingBar
                 android:id="@+id/ratingBar"
-                android:layout_width="match_parent"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:isIndicator="false"
                 android:numStars="10"
-                android:scaleX="0.8"
-                android:scaleY="0.8" />
+                android:scaleX="2"
+                android:scaleY="2" />
 
             <TextView
                 android:id="@+id/textreview"
@@ -112,7 +107,7 @@
 
             <EditText
                 android:id="@+id/registerEditreview"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Movie Review"
@@ -129,17 +124,17 @@
 
                 <RadioButton
                     android:id="@+id/favRadio"
-                    android:layout_marginRight="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
                     android:text="Favourite"
                     android:textSize="25sp" />
 
                 <RadioButton
                     android:id="@+id/notfavRadio"
-                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:text="Not Favourite"
                     android:textSize="25sp" />
             </RadioGroup>

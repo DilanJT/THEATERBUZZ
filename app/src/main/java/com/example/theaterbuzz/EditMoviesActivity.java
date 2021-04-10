@@ -35,17 +35,64 @@ public class EditMoviesActivity extends AppCompatActivity {
         }
 
         moviesList = new ArrayList<>();
-        moviesListView = (ListView) findViewById(R.id.displayMoviesListView);
+        moviesListView = (ListView) findViewById(R.id.editMoviesListView);
 
         loadMovies();
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, moviesList);
         moviesListView.setAdapter(arrayAdapter);
 
+        MovieDataHelper db = new MovieDataHelper(this);
+        List<Movie> movies = db.getAllMovies();
+
         moviesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String movieString = moviesList.get(position);
+                String[] movieDetails = movieString.split("-");
+                // separating the movie title and year
+                String movieTitle = movieDetails[0].trim();
+                int year = Integer.parseInt(movieDetails[1].trim());
+
+                String title = "";
+                int movieYear = 1895;
+                String director = "";
+                String actors = "";
+                int rating = 1;
+                String review = "";
+                boolean isFavourite = false;
+                int movieID = 0;
+
+                // iterating over all the movies
+                for(int i = 0; i < movies.size(); i++) {
+                    Movie movie = movies.get(i);
+                    if(movie.getMovieTitle().equalsIgnoreCase(movieTitle) && movie.getMovieYear() == year) {
+                        movieID = movie.getMovieID();
+                        title = movie.getMovieTitle();
+                        movieYear = movie.getMovieYear();
+                        director = movie.getMovieDirector();
+                        actors = movie.getStringActors();
+                        rating = movie.getRating();
+                        review = movie.getReview();
+                        isFavourite = movie.isFavourite();
+                    }
+                }
+
                 // send the movie object by loading from the database
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", movieID);
+                bundle.putString("title", title);
+                bundle.putInt("year", movieYear);
+                bundle.putString("director", director);
+                bundle.putString("actors", actors);
+                bundle.putInt("rating", rating);
+                bundle.putString("review", review);
+                bundle.putBoolean("isfavourite", isFavourite);
+
+                EditMovieDialog editMovieDialog = new EditMovieDialog();
+                editMovieDialog.setArguments(bundle);
+                editMovieDialog.show(getSupportFragmentManager(), "edit dialog");
             }
         });
 
