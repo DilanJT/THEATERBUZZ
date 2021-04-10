@@ -24,7 +24,7 @@ import static java.sql.Types.INTEGER;
 
 public class MovieDataHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "movies.db";
+    private static final String DATABASE_NAME = "moviesfav.db";
     private static final int DATABASE_VERSION = 1;
 
     public MovieDataHelper(Context context){
@@ -36,13 +36,13 @@ public class MovieDataHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " ("
             + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + TITLE + " TEXT NOT NULL,"
-            + YEAR + " INTEGER NOT NULL,"
-            + DIRECTOR + " TEXT NOT NULL,"
-            + ACTORS + " TEXT,"
-            + RATING + " INTEGER,"
-            + REVIEW + " TEXT,"
-            + ISFAVOURITE + "BOOLEAN);");
+            + TITLE + " TEXT NOT NULL, "
+            + YEAR + " INTEGER NOT NULL, "
+            + DIRECTOR + " TEXT NOT NULL, "
+            + ACTORS + " TEXT, "
+            + RATING + " INTEGER, "
+            + REVIEW + " TEXT, "
+            + ISFAVOURITE + " BOOLEAN); ");
     }
 
     @Override
@@ -85,7 +85,7 @@ public class MovieDataHelper extends SQLiteOpenHelper {
                 cursor.getString(4),
                 Integer.parseInt(cursor.getString(5)),
                 cursor.getString(6),
-                Boolean.parseBoolean(cursor.getString(7))
+                cursor.getString(7).equals("1") ? true : false
         );
         return movie;
     }
@@ -109,7 +109,7 @@ public class MovieDataHelper extends SQLiteOpenHelper {
                 movie.setStringActors(cursor.getString(4));
                 movie.setRating(Integer.parseInt(cursor.getString(5)));
                 movie.setReview(cursor.getString(6));
-                movie.setFavourite(Boolean.parseBoolean(cursor.getString(7)));
+                movie.setFavourite(cursor.getString(7).equals("1") ? true : false); // if 1 ? true : false
 
                 movies.add(movie);
             }while (cursor.moveToNext());
@@ -137,6 +137,7 @@ public class MovieDataHelper extends SQLiteOpenHelper {
         values.put(ACTORS, movie.getStringActors());
         values.put(RATING, movie.getRating());
         values.put(REVIEW, movie.getReview());
+        values.put(ISFAVOURITE, movie.isFavourite());
 
         // updating the specific record
         return db.update(TABLE_NAME, values, _ID + " = ?",

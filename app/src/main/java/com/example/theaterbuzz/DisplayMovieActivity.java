@@ -43,10 +43,6 @@ public class DisplayMovieActivity extends AppCompatActivity {
         // loading the movies as string value each to the moviesList array
         loadMovies();
 
-        // setting the movies adapter for the listView
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, moviesList);
-        listView.setAdapter(adapter);
-
 
     }
 
@@ -68,14 +64,10 @@ public class DisplayMovieActivity extends AppCompatActivity {
 
                     if(movies.get(i).getMovieTitle().equals(movieTitle) && movies.get(i).getMovieYear() == year) {
                         Movie movie = movies.get(i);
+                        movie.setMovieID(movies.get(i).getMovieID()); //TODO check again
                         if(checked.keyAt(j) == i){
-                            db.updateMovie(new Movie(movie.getMovieTitle(),
-                                    movie.getMovieYear(),
-                                    movie.getMovieDirector(),
-                                    movie.getStringActors(),
-                                    movie.getRating(),
-                                    movie.getReview(),
-                                    checked.valueAt(j)));
+                            movie.setFavourite(checked.valueAt(j));
+                            db.updateMovie(movie);
 
                             Log.d("UPDATE :", movie.getMovieTitle() + " got successfully updated");
                             Toast.makeText(this, movie.getMovieTitle() + " got successfully updated", Toast.LENGTH_SHORT).show();
@@ -100,8 +92,17 @@ public class DisplayMovieActivity extends AppCompatActivity {
                 String movieString = movies.get(i).getMovieTitle() + " - " + movies.get(i).getMovieYear();
                 Log.d("Movie :", movieString);
                 moviesList.add(movieString); // adding the movie string to the listview list
-                listView.setItemChecked(i, movies.get(i).isFavourite());
+                //listView.setItemChecked(i, movies.get(i).isFavourite());
             }
         }
+
+        // setting the favourite movies adapter for the listView
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, moviesList);
+        listView.setAdapter(adapter);
+
+        // setting the item checked
+//        for (int i = 0; i < listView.getCount(); i++) {
+//            listView.setItemChecked(i, true);
+//        }
     }
 }

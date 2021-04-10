@@ -133,12 +133,11 @@ public class Movie {
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
         return movieYear == movie.movieYear &&
-                Objects.equals(movieTitle, movie.movieTitle) &&
-                Objects.equals(movieDirector, movie.movieDirector);
+                Objects.equals(movieTitle, movie.movieTitle);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(movieTitle, movieYear, movieDirector);
+        return Objects.hash(movieTitle, movieYear);
     }
 }

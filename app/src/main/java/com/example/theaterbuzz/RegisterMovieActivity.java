@@ -114,9 +114,7 @@ public class RegisterMovieActivity extends AppCompatActivity{
                     director.getText().toString(),
                     actors.getText().toString(),
                     Integer.parseInt(rating.getText().toString()),
-                    review.getText().toString(),
-                    false // setting the default value of the isMovie false.
-            ));
+                    review.getText().toString(), false));// setting the default value of the isFavourite false.
             Toast.makeText(this, "Movie " + title.getText().toString() + " successfully added", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(this, "Not saved! Please fill all the details", Toast.LENGTH_SHORT).show();

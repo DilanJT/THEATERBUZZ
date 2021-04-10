@@ -45,7 +45,7 @@ public class EditMoviesActivity extends AppCompatActivity {
         moviesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                // send the movie object by loading from the database
             }
         });
 

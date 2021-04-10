@@ -14,3 +14,4 @@ public interface Constants extends BaseColumns {
     public static final String ISFAVOURITE = "isfavourite";
 
 }
+
