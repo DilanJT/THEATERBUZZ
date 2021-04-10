@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.theaterbuzz.model.EventListener;
 import com.example.theaterbuzz.model.Movie;
 import com.example.theaterbuzz.model.MovieDataHelper;
 
@@ -38,7 +39,7 @@ public class EditMovieDialog extends AppCompatDialogFragment {
     RadioButton rNotFavourite;
     RadioButton radioFavButton;
 
-
+    EventListener listener;
 
     @NonNull
     @Override
@@ -142,6 +143,8 @@ public class EditMovieDialog extends AppCompatDialogFragment {
 
                                 Log.d("UPDATE :", movie.getMovieTitle() + " got successfully updated");
                                 Toast.makeText(getContext(), movie.getMovieTitle() + " got successfully updated", Toast.LENGTH_SHORT).show();
+
+                                listener.loadDataAgain();
                             }
                         }
                     }
@@ -165,6 +168,12 @@ public class EditMovieDialog extends AppCompatDialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+
+        if(context instanceof EventListener) {
+            listener = (EventListener)context;
+        }else{
+            Log.d("ERROR", "Havent implemented the EventListener");
+        }
     }
 
 }

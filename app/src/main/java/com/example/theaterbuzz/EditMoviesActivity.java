@@ -1,8 +1,10 @@
 package com.example.theaterbuzz;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,16 +12,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.theaterbuzz.model.EventListener;
 import com.example.theaterbuzz.model.Movie;
 import com.example.theaterbuzz.model.MovieDataHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditMoviesActivity extends AppCompatActivity {
+public class EditMoviesActivity extends AppCompatActivity implements EventListener {
 
     ListView moviesListView;
     List<String> moviesList;
+    List<Integer> movieIDs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class EditMoviesActivity extends AppCompatActivity {
         }
 
         moviesList = new ArrayList<>();
+        movieIDs = new ArrayList<>();
         moviesListView = (ListView) findViewById(R.id.editMoviesListView);
 
         loadMovies();
@@ -42,12 +47,16 @@ public class EditMoviesActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, moviesList);
         moviesListView.setAdapter(arrayAdapter);
 
-        MovieDataHelper db = new MovieDataHelper(this);
-        List<Movie> movies = db.getAllMovies();
+
+
+
 
         moviesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                MovieDataHelper db = new MovieDataHelper(getApplicationContext());
+                List<Movie> movies = db.getAllMovies();
 
                 String movieString = moviesList.get(position);
                 String[] movieDetails = movieString.split("-");
@@ -67,7 +76,7 @@ public class EditMoviesActivity extends AppCompatActivity {
                 // iterating over all the movies
                 for(int i = 0; i < movies.size(); i++) {
                     Movie movie = movies.get(i);
-                    if(movie.getMovieTitle().equalsIgnoreCase(movieTitle) && movie.getMovieYear() == year) {
+                    if(movie.getMovieID() == movieIDs.get(position)) {
                         movieID = movie.getMovieID();
                         title = movie.getMovieTitle();
                         movieYear = movie.getMovieYear();
@@ -90,11 +99,14 @@ public class EditMoviesActivity extends AppCompatActivity {
                 bundle.putString("review", review);
                 bundle.putBoolean("isfavourite", isFavourite);
 
-                EditMovieDialog editMovieDialog = new EditMovieDialog();
+                EditMovieDialog editMovieDialog = new EditMovieDialog(); // setting up the dialog fragment
                 editMovieDialog.setArguments(bundle);
                 editMovieDialog.show(getSupportFragmentManager(), "edit dialog");
+
             }
         });
+
+
 
     }
 
@@ -109,7 +121,19 @@ public class EditMoviesActivity extends AppCompatActivity {
                 String movieString = movies.get(i).getMovieTitle() + " - " + movies.get(i).getMovieYear();
                 Log.d("Movie :", movieString);
                 moviesList.add(movieString); // adding the movie string to the listview list
+                movieIDs.add(movies.get(i).getMovieID());
             }
         }
+
+
+    }
+
+    @Override
+    public void loadDataAgain() {
+        moviesList.clear();
+        movieIDs.clear();
+        loadMovies();
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, moviesList);
+        moviesListView.setAdapter(arrayAdapter);
     }
 }
