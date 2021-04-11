@@ -144,4 +144,34 @@ public class MovieDataHelper extends SQLiteOpenHelper {
                 new String[] {String.valueOf(movie.getMovieID())});
     }
 
+    // returns the movies for the search string
+    public List<Movie> searchMovies(String movieText) {
+        List<Movie> movies = new ArrayList<>();
+
+        String selectStm = "SELECT * FROM " + TABLE_NAME + " WHERE "+ TITLE +" LIKE '%"+ movieText + "%' OR "
+                + DIRECTOR +" LIKE '%"+ movieText + "%' OR "
+                + ACTORS +" LIKE '%"+ movieText + "%'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectStm, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                Movie movie = new Movie();
+                movie.setMovieID(Integer.parseInt(cursor.getString(0)));
+                movie.setMovieTitle(cursor.getString(1));
+                movie.setMovieYear(Integer.parseInt(cursor.getString(2)));
+                movie.setMovieDirector(cursor.getString(3));
+                movie.setStringActors(cursor.getString(4));
+                movie.setRating(Integer.parseInt(cursor.getString(5)));
+                movie.setReview(cursor.getString(6));
+                movie.setFavourite(cursor.getString(7).equals("1") ? true : false); // if 1 ? true : false
+
+                movies.add(movie);
+            }while (cursor.moveToNext());
+        }
+
+        return movies;
+    }
+
 }
