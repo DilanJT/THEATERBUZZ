@@ -22,6 +22,7 @@ import com.example.theaterbuzz.model.EventListener;
 import com.example.theaterbuzz.model.Movie;
 import com.example.theaterbuzz.model.MovieDataHelper;
 
+import java.util.Date;
 import java.util.List;
 
 public class EditMovieDialog extends AppCompatDialogFragment {
@@ -39,7 +40,7 @@ public class EditMovieDialog extends AppCompatDialogFragment {
     RadioButton rNotFavourite;
     RadioButton radioFavButton;
 
-    EventListener listener;
+    EventListener listener; // used to call the function which will be implemented in the EditMoviesActivity
 
     @NonNull
     @Override
@@ -151,11 +152,33 @@ public class EditMovieDialog extends AppCompatDialogFragment {
                 });
 
 
+        // getting the current year to set the max for the year when editing
+        Date d = new Date();
+        int cYear = d.getYear(); // getting the current date as the max value filter.
+        int currentYear = cYear + 1900;
+        Log.d("YEAR", "Current year is " + currentYear);
+
 
         editYear.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 // TODO check the year is greater than 1895
+
+                if(!hasFocus) {
+                    if(!editYear.getText().toString().isEmpty()){
+                        if(Integer.parseInt(editYear.getText().toString()) < 1895){
+                            Toast.makeText(getContext(), "Year should be greater than or equal 1895", Toast.LENGTH_SHORT).show();
+                            editYear.setText(null);
+                        }
+                    }
+
+                    if(!editYear.getText().toString().isEmpty()) {
+                        if(Integer.parseInt(editYear.getText().toString()) > currentYear){
+                            Toast.makeText(getContext(), "Year should be less than or equal" + currentYear, Toast.LENGTH_SHORT).show();
+                            editYear.setText(null);
+                        }
+                    }
+                }
             }
         });
 
