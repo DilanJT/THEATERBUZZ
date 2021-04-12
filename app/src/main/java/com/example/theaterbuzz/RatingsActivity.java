@@ -3,6 +3,7 @@ package com.example.theaterbuzz;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -48,6 +49,18 @@ public class RatingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int selectedPosition = ratingListView.getCheckedItemPosition();
+
+                String movieString = moviesRatings.get(selectedPosition);
+                String[] movieDetails = movieString.split("-");
+                // separating the movie title and year
+                String movieTitle = movieDetails[0].trim();
+                int year = Integer.parseInt(movieDetails[1].trim());
+
+                String movieName = movieTitle + " " + year;
+
+                Intent intent = new Intent(getApplicationContext(), IMDBmoviesActivity.class);
+                intent.putExtra("title", movieName);
+                startActivity(intent);
             }
         });
     }
@@ -58,7 +71,7 @@ public class RatingsActivity extends AppCompatActivity {
 
         if(!movies.isEmpty()) {
             for(int i = 0; i < movies.size(); i ++) {
-                String movieString = movies.get(i).getMovieTitle() + " - " + movies.get(i).getRating();
+                String movieString = movies.get(i).getMovieTitle() + " - " + movies.get(i).getMovieYear();
                 moviesRatings.add(movieString);
             }
         }

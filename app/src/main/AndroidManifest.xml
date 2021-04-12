@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.theaterbuzz">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -9,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.THEATERBUZZ">
-        <activity android:name=".RatingsActivity"></activity>
+        <activity android:name=".IMDBmoviesActivity"></activity>
+        <activity android:name=".RatingsActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".EditMoviesActivity" />
         <activity android:name=".FavouritesActivity" />
