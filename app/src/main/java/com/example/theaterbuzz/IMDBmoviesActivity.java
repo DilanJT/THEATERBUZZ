@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.theaterbuzz.model.Movie;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -68,7 +70,12 @@ public class IMDBmoviesActivity extends AppCompatActivity {
                 if(!imageList.isEmpty()){
                     if(imageList.get(position) != null){
                         //TODO start a fragment
-
+                        Bundle bundle = new Bundle();
+                        bundle.putString("image", imageList.get(position));
+                        bundle.putString("title", moviesList.get(position));
+                        MovieImageDialog movieImageDialog = new MovieImageDialog();
+                        movieImageDialog.setArguments(bundle);
+                        movieImageDialog.show(getSupportFragmentManager(),"image view");
                     }else{
                         Toast.makeText(IMDBmoviesActivity.this, "Sorry! Image is not available", Toast.LENGTH_SHORT).show();
                     }
