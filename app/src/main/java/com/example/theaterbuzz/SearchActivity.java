@@ -1,15 +1,20 @@
 package com.example.theaterbuzz;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.theaterbuzz.model.Movie;
 import com.example.theaterbuzz.model.MovieDataHelper;
@@ -66,7 +71,20 @@ public class SearchActivity extends AppCompatActivity {
 
             addMovies(movies);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, searchedMovies);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, searchedMovies){
+                @NonNull
+                @Override
+                public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+                    View view = super.getView(position, convertView, parent);
+                    TextView tv = (TextView) view.findViewById(android.R.id.text1);
+                    tv.setTextColor(getResources().getColor(R.color.theaterbuzz_orange));
+                    tv.setTypeface(Typeface.DEFAULT_BOLD);
+                    tv.setTextSize(18);
+
+                    return view;
+                }
+            };
             listView.setAdapter(adapter);
 
         }else {
@@ -75,7 +93,20 @@ public class SearchActivity extends AppCompatActivity {
 
             addMovies(movies);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, searchedMovies);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, searchedMovies){
+                @NonNull
+                @Override
+                public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+                    View view = super.getView(position, convertView, parent);
+                    TextView tv = (TextView) view.findViewById(android.R.id.text1);
+                    tv.setTextColor(getResources().getColor(R.color.theaterbuzz_orange));
+                    tv.setTypeface(Typeface.DEFAULT_BOLD);
+                    tv.setTextSize(18);
+
+                    return view;
+                }
+            };
             listView.setAdapter(adapter);
         }
 

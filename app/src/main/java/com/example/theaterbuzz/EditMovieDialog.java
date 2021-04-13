@@ -86,7 +86,7 @@ public class EditMovieDialog extends AppCompatDialogFragment {
         editYear.setText(Integer.toString(movieYear));
         editDirector.setText(director);
         editActors.setText(actors);
-        ratingBar.setRating(rating); // TODO: convert the int variable of rating to float type throughout the project
+        ratingBar.setRating(rating);
         editReview.setText(review);
 
         if(isFavourite) {
@@ -106,7 +106,7 @@ public class EditMovieDialog extends AppCompatDialogFragment {
 
                     }
                 })
-                .setPositiveButton("Save", new DialogInterface.OnClickListener(){
+                .setPositiveButton("Update", new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // save the values to the database
@@ -120,7 +120,7 @@ public class EditMovieDialog extends AppCompatDialogFragment {
                         int mYear = Integer.parseInt(editYear.getText().toString());
                         String mDirector = editDirector.getText().toString();
                         String mActors = editActors.getText().toString();
-                        int mRating = (int) ratingBar.getRating(); // TODO change this to float
+                        int mRating = (int) ratingBar.getRating();
                         String mReview = editReview.getText().toString();
                         boolean mFav;
                         if(rFavourite.isChecked()){
@@ -162,7 +162,7 @@ public class EditMovieDialog extends AppCompatDialogFragment {
         editYear.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                // TODO check the year is greater than 1895
+                // check the year is greater than 1895
 
                 if(!hasFocus) {
                     if(!editYear.getText().toString().isEmpty()){

@@ -16,7 +16,7 @@
         <activity android:name=".EditMoviesActivity" />
         <activity android:name=".FavouritesActivity" />
         <activity android:name=".DisplayMovieActivity" />
-        <activity android:name=".RegisterMovieActivity" />
+        <activity android:name=".RegisterMovieActivity"/>
         <activity
             android:name=".IntroScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">

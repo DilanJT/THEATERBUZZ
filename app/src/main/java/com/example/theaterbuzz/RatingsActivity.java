@@ -1,14 +1,19 @@
 package com.example.theaterbuzz;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.theaterbuzz.model.Movie;
 import com.example.theaterbuzz.model.MovieDataHelper;
@@ -42,7 +47,20 @@ public class RatingsActivity extends AppCompatActivity {
 
         loadMovies();
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, moviesRatings);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, moviesRatings){
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+                View view = super.getView(position, convertView, parent);
+                TextView tv = (TextView) view.findViewById(android.R.id.text1);
+                tv.setTextColor(getResources().getColor(R.color.theaterbuzz_orange));
+                tv.setTypeface(Typeface.DEFAULT_BOLD);
+                tv.setTextSize(20);
+
+                return view;
+            }
+        };
         ratingListView.setAdapter(arrayAdapter);
 
         btnFind.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +77,7 @@ public class RatingsActivity extends AppCompatActivity {
                 String movieName = movieTitle + " " + year;
 
                 Intent intent = new Intent(getApplicationContext(), IMDBmoviesActivity.class);
-                intent.putExtra("title", movieName);
+                intent.putExtra("title", movieTitle);
                 startActivity(intent);
             }
         });

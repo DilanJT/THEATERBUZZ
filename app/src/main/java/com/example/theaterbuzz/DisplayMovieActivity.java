@@ -1,20 +1,29 @@
 package com.example.theaterbuzz;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.theaterbuzz.model.Movie;
 import com.example.theaterbuzz.model.MovieDataHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class DisplayMovieActivity extends AppCompatActivity {
@@ -43,7 +52,6 @@ public class DisplayMovieActivity extends AppCompatActivity {
         // loading the movies as string value each to the moviesList array
         loadMovies();
 
-        // TODO: have to display the movies in the alphabetical way
     }
 
     public void saveFavourites(View view) {
@@ -96,8 +104,29 @@ public class DisplayMovieActivity extends AppCompatActivity {
             }
         }
 
+        // sorting according to the alphabetical order
+        Collections.sort(moviesList, new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s1.compareToIgnoreCase(s2);
+            }
+        });
+
         // setting the favourite movies adapter for the listView
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, moviesList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, moviesList) {
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+                View view = super.getView(position, convertView, parent);
+                TextView tv = (TextView) view.findViewById(android.R.id.text1);
+                tv.setTextColor(getResources().getColor(R.color.theaterbuzz_orange));
+                tv.setTypeface(Typeface.DEFAULT_BOLD);
+                tv.setTextSize(20);
+
+                return view;
+            }
+        };
         listView.setAdapter(adapter);
 
         // setting the item checked

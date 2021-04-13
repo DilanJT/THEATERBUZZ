@@ -1,16 +1,21 @@
 package com.example.theaterbuzz;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.theaterbuzz.model.Movie;
@@ -27,7 +32,8 @@ import java.util.List;
 
 public class IMDBmoviesActivity extends AppCompatActivity {
 
-    String key = "k_1vy4d7ez";
+    String key = "k_1vy4d7ez"; // personal account
+    //String key = "k_1ds8bpwd"; // iit account
     String searchUrl = "https://imdb-api.com/en/API/SearchMovie/";
     String ratingURL = "https://imdb-api.com/en/API/UserRatings/";
 
@@ -69,7 +75,7 @@ public class IMDBmoviesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(!imageList.isEmpty()){
                     if(imageList.get(position) != null){
-                        //TODO start a fragment
+                        // displaying the selected movie's image on a new Dialog type fragment.
                         Bundle bundle = new Bundle();
                         bundle.putString("image", imageList.get(position));
                         bundle.putString("title", moviesList.get(position));
@@ -120,21 +126,11 @@ public class IMDBmoviesActivity extends AppCompatActivity {
         public void run() {
 
             StringBuilder jsonStrings = new StringBuilder(""); // movies
-            StringBuilder jsonStringsRating = new StringBuilder(""); // rating of a movie
+
 
             try {
-                // setup the connection
-//                URL url = new URL(searchUrlString);
-//                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-//
-//                BufferedReader bf = new BufferedReader(new InputStreamReader(con.getInputStream()));
-//
-//                String line;
-//                while((line = bf.readLine()) != null){
-//                    jsonStrings.append(line);
-//                }
 
-                makeString(searchUrlString, jsonStrings);
+                makeString(searchUrlString, jsonStrings); // run URL connections and add the json data to StringBuilder
 
                 // json parsing
                 JSONObject jsonObject = new JSONObject(jsonStrings.toString());
@@ -142,10 +138,11 @@ public class IMDBmoviesActivity extends AppCompatActivity {
 
                 // finding the
                 for(int i = 0; i < jsonArray.length(); i++) {
+                    StringBuilder jsonStringsRating = new StringBuilder(""); // hold the rating of a movie
                     JSONObject jsonMovieTitle = jsonArray.getJSONObject(i);
-                    String movieName = jsonMovieTitle.getString("title");
-                    String movieIMDBid = jsonMovieTitle.getString("id");
-                    String imagePath = jsonMovieTitle.getString("image");
+                    String movieName = jsonMovieTitle.getString("title"); // return movie title
+                    String movieIMDBid = jsonMovieTitle.getString("id"); // return movie id
+                    String imagePath = jsonMovieTitle.getString("image"); // return the image url
 
                     String userRatingFullUrl  = rUrlString + "/" + movieIMDBid;
                     makeString(userRatingFullUrl, jsonStringsRating);
@@ -175,7 +172,20 @@ public class IMDBmoviesActivity extends AppCompatActivity {
                 public void run() {
                     // updates the UI
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, moviesList);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, moviesList){
+                        @NonNull
+                        @Override
+                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+                            View view = super.getView(position, convertView, parent);
+                            TextView tv = (TextView) view.findViewById(android.R.id.text1);
+                            tv.setTextColor(getResources().getColor(R.color.theaterbuzz_orange));
+                            tv.setTypeface(Typeface.DEFAULT_BOLD);
+                            tv.setTextSize(20);
+
+                            return view;
+                        }
+                    };
                     listView.setAdapter(adapter);
 
                 }

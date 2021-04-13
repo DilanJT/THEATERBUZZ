@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_back"
     tools:context=".RatingsActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -32,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
         android:text="Find Movie in IMDB"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

@@ -4,6 +4,8 @@ import android.provider.BaseColumns;
 
 public interface Constants extends BaseColumns {
 
+    // name constants which will be used for the local database
+
     public static final String TABLE_NAME = "watchedmovies";
     public static final String TITLE = "title";
     public static final String YEAR = "year";

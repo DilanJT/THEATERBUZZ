@@ -1,16 +1,20 @@
 package com.example.theaterbuzz;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.theaterbuzz.model.EventListener;
 import com.example.theaterbuzz.model.Movie;
@@ -44,7 +48,20 @@ public class EditMoviesActivity extends AppCompatActivity implements EventListen
 
         loadMovies();
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, moviesList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, moviesList){
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+                View view = super.getView(position, convertView, parent);
+                TextView tv = (TextView) view.findViewById(android.R.id.text1);
+                tv.setTextColor(getResources().getColor(R.color.theaterbuzz_orange));
+                tv.setTypeface(Typeface.DEFAULT_BOLD);
+                tv.setTextSize(20);
+
+                return view;
+            }
+        };
         moviesListView.setAdapter(arrayAdapter);
 
 
@@ -130,10 +147,24 @@ public class EditMoviesActivity extends AppCompatActivity implements EventListen
 
     @Override
     public void loadDataAgain() {
+        // function used to load the data again and update the Ui after an edit done.
         moviesList.clear();
         movieIDs.clear();
         loadMovies();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, moviesList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, moviesList){
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+                View view = super.getView(position, convertView, parent);
+                TextView tv = (TextView) view.findViewById(android.R.id.text1);
+                tv.setTextColor(getResources().getColor(R.color.theaterbuzz_orange));
+                tv.setTypeface(Typeface.DEFAULT_BOLD);
+                tv.setTextSize(20);
+
+                return view;
+            }
+        };
         moviesListView.setAdapter(arrayAdapter);
     }
 }
